@@ -1,0 +1,42 @@
+from m5stack import *
+from m5stack_ui import *
+from uiflow import *
+import os
+
+screen = M5Screen()
+screen.clean_screen()
+screen.set_screen_bg_color(0xFFFFFF)
+
+
+pos = None
+Songlist = None
+i = None
+file2 = None
+
+
+image0 = M5Img("res/picture-3.png", x=110, y=25, parent=None)
+touch_button0 = M5Btn(text='next', x=234, y=160, w=60, h=60, bg_c=0xFFFFFF, text_c=0xecbf5a, font=FONT_MONT_18, parent=None)
+touch_button1 = M5Btn(text='back', x=23, y=160, w=60, h=60, bg_c=0xffffff, text_c=0xebbb50, font=FONT_MONT_18, parent=None)
+touch_button2 = M5Btn(text='play', x=115, y=170, w=90, h=50, bg_c=0xFFFFFF, text_c=0xe1bb52, font=FONT_MONT_18, parent=None)
+label1 = M5Label('Text', x=102, y=219, color=0x000, font=FONT_MONT_14, parent=None)
+
+
+
+
+pos = 0
+while True:
+  Songlist = os.listdir('/sd/')
+  for i in Songlist:
+    if "_" in i:
+    Songlist.remove(i)
+    if "fseventsd" in i:
+    Songlist.remove(i)
+    if "SpotlightV100" in i:
+    Songlist.remove(i)
+  file2 = (str('/sd/') + str(Songlist[int(pos - 1)]))
+  label1.set_text(str(file2))
+  if pos == len(Songlist):
+    pos = 0
+  if pos < 0:
+    pos = 0
+  wait_ms(2)
